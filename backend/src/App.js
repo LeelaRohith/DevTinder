@@ -1,10 +1,12 @@
 const express = require("express");
 const { connectDB } = require("./config/database");
 const app = express();
+const cookieParser = require("cookie-parser");
 const User = require("./models/user");
 const bcrypt = require("bcrypt");
 const { validateSignUpData } = require("./utils/validation");
 app.use(express.json()); //this middleware applies to every request
+app.use(cookieParser());
 app.post("/signup", async (req, res) => {
   try {
     validateSignUpData(req);
@@ -57,6 +59,7 @@ app.post("/login", async (req, res) => {
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (isPasswordValid) {
+      res.cookie("token", "hulhflyufoyugolyf");
       res.send("Login Successful");
     } else {
       throw new Error("Invalid Credentials");
@@ -64,6 +67,13 @@ app.post("/login", async (req, res) => {
   } catch (err) {
     res.status(400).send("Error:" + err.message);
   }
+});
+
+app.get("/profile", async (req, res) => {
+  const cookies = req.cookies;
+  const { token } = cookies;
+  console.log(cookies);
+  res.send("Reading Cooking");
 });
 
 app.get("/user", async (req, res) => {
