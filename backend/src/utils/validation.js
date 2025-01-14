@@ -18,4 +18,19 @@ const validateSignUpData = (req) => {
     throw new Error("Email is not valid");
   }
 };
-module.exports = { validateSignUpData };
+const validateEditProfileData = (req) => {
+  const allowedFields = [
+    "firstName",
+    "lastName",
+    "age",
+    "gender",
+    "photoUrl",
+    "about",
+    "skills",
+  ];
+  const isEditAllowed = Object.keys(req.body).every((field) =>
+    allowedFields.includes(field)
+  );
+  return isEditAllowed;
+};
+module.exports = { validateSignUpData, validateEditProfileData };
