@@ -4,7 +4,13 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const userSchema = mongoose.Schema(
   {
-    firstName: { type: String, required: true, minLength: 4, maxLength: 50 },
+    firstName: {
+      type: String,
+      required: true,
+
+      minLength: 4,
+      maxLength: 50,
+    },
     lastName: { type: String },
     emailId: {
       type: String,
@@ -61,5 +67,6 @@ userSchema.methods.validatePassword = async function (passwordInputByUser) {
   );
   return isPasswordValid;
 };
+
 const User = mongoose.model("User", userSchema);
 module.exports = User;

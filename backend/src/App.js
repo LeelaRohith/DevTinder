@@ -8,8 +8,9 @@ app.use(cookieParser());
 
 const authRouter = require("./routers/auth");
 const profileRouter = require("./routers/profile");
+const requestRouter = require("./routers/request");
 
-app.use("/", authRouter, profileRouter);
+app.use("/", authRouter, profileRouter, requestRouter);
 
 // app.get("/user", async (req, res) => {
 //   try {
